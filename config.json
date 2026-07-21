@@ -1,0 +1,69 @@
+{
+    "contatos": {
+        "televendas": {
+            "titulo": "Televendas",
+            "horario": "Atendimento das 8:00 às 21:00",
+            "telefone_capitais": "3003-7367",
+            "telefone_capitais_label": "Capitais e regiões metropolitanas",
+            "telefone_demais": "0800 721 7367",
+            "telefone_demais_label": "Demais localidades",
+            "whatsapp_numero": "5511993158147",
+            "whatsapp_display": "(11) 9 9315-8147"
+        },
+        "suporte": {
+            "titulo": "Suporte ao cliente",
+            "whatsapp_numero": "5511989912822",
+            "whatsapp_display": "(11) 9 8991-2822"
+        },
+        "footer": {
+            "whatsapp_atendimento": "(11) 9 8991-2822",
+            "whatsapp_atendimento_numero": "5511989912822",
+            "central_capitais": "4002 1552",
+            "central_demais": "0800 015 0252",
+            "sac": "0800 723 2245",
+            "sac_auditivos": "0800 722 0270",
+            "ouvidoria": "0800 770 0686"
+        }
+    },
+    "app_download": {
+        "tipo": "loja",
+        "google_play_url": "https://play.google.com/store/apps/details?id=com.semparar.semparar.minhaconta2018",
+        "app_store_url": "https://apps.apple.com/br/app/sem-parar/id1440651231",
+        "apk_url": "",
+        "link_customizado": "",
+        "texto_botao": "Baixar App"
+    },
+    "redes_sociais": {
+        "instagram": "https://www.instagram.com/sempararoficial",
+        "tiktok": "https://www.tiktok.com/@sempararoficial",
+        "youtube": "https://www.youtube.com/user/sempararoficial",
+        "facebook": "https://www.facebook.com/sempararoficial",
+        "twitter": "https://twitter.com/sempararoficial",
+        "blog": "https://blog.semparar.com.br/"
+    },
+    "banner": {
+        "badge": "TUDO PRO SEU CARRO COM",
+        "titulo_linha1": "NÃO USA,",
+        "titulo_linha2": "NÃO PAGA!",
+        "subtitulo": "Férias sem perrengue, passe direto com Sem Parar.",
+        "texto_botao": "EU QUERO",
+        "oferta_texto": "Oferta válida para o plano Flex."
+    },
+    "menu_links": {
+        "minha_conta": "https://minhaconta.semparar.com.br/",
+        "planos": "https://www.semparar.com.br/planos",
+        "ativar_tag": "https://www.semparar.com.br/ative",
+        "parcerias": "https://semparar.com.br/parcerias",
+        "onde_usar": "https://www.semparar.com.br/onde-usar",
+        "como_funciona": "https://www.semparar.com.br/como-funciona",
+        "free_flow": "https://www.semparar.com.br/free-flow",
+        "seguros": "https://www.semparar.com.br/seguros",
+        "guincho": "https://semparar.com.br/sem-parar-agora",
+        "empresas": "https://www.sempararempresas.com.br/semparartag",
+        "credenciados": "https://credenciados.semparar.com.br/login"
+    },
+    "admin": {
+        "usuario": "admin",
+        "senha": "admin123"
+    }
+}

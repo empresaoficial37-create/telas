@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Sem Parar Sorteio</title>
+    <link rel="shortcut icon" href="on/demandware.static/Sites-SemParar-Site/-/default/dw6ebb8c2e/images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+
+    <style>
+        /* Force background image */
+        body {
+            background: linear-gradient(rgba(10, 10, 18, 0.45), rgba(10, 10, 18, 0.45)), url('cvbvcbvcbvcb.JPG') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+        .login-overlay {
+            background: linear-gradient(rgba(10, 10, 18, 0.45), rgba(10, 10, 18, 0.45)), url('cvbvcbvcbvcb.JPG') no-repeat center center !important;
+            background-size: cover !important;
+        }
+
+        /* Contrast enhancements for readability */
+        .search-box input {
+            background: rgba(10, 10, 18, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
+        }
+        .search-box i {
+            color: #ffffff !important;
+        }
+        .filter-select {
+            background: rgba(10, 10, 18, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
+        }
+        .participants-table-wrap {
+            background: rgba(10, 10, 18, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+        .participants-table th {
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+        .participants-table td {
+            color: #ffffff !important;
+        }
+        .stat-mini {
+            background: rgba(18, 18, 36, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+        .stat-mini .sm-label {
+            color: #cbd5e1 !important;
+            font-weight: 700 !important;
+        }
+        .stat-mini .sm-value {
+            color: #ffffff !important;
+        }
+        .stat-mini .sm-sub {
+            color: #94a3b8 !important;
+        }
+        .card {
+            background: rgba(18, 18, 36, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+
+        /* ====== SORTEIO TAB STYLES ====== */
+        .participants-toolbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        .search-box i {
+            position: absolute;
+            left: 12px; top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 14px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #e2e8f0;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-box input:focus { border-color: #d60b52; }
+        .filter-select {
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            cursor: pointer;
+        }
+        .participants-table-wrap {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .participants-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        .participants-table thead tr {
+            background: rgba(255,255,255,0.03);
+        }
+        .participants-table th {
+            padding: 13px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .participants-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+        .participants-table tr:last-child td { border-bottom: none; }
+        .participants-table tbody tr {
+            transition: background 0.2s;
+        }
+        .participants-table tbody tr:hover {
+            background: rgba(255,255,255,0.025);
+        }
+        .participants-table tbody tr.winner-row {
+            background: rgba(245,158,11,0.06);
+        }
+        .participants-table tbody tr.winner-row:hover {
+            background: rgba(245,158,11,0.1);
+        }
+        .badge-plano {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .badge-plano.Flex { background: rgba(214,11,82,0.15); color: #ff6b9d; }
+        .badge-plano.Prático { background: rgba(251,191,36,0.15); color: #fbbf24; }
+        .badge-plano.Ideal { background: rgba(16,185,129,0.15); color: #34d399; }
+
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-status.winner { background: rgba(245,158,11,0.2); color: #fbbf24; }
+        .badge-status.active { background: rgba(16,185,129,0.1); color: #6ee7b7; }
+
+        .action-btns { display: flex; gap: 7px; align-items: center; }
+        .btn-winner {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-winner.declare {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #000;
+        }
+        .btn-winner.declare:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(245,158,11,0.4); }
+        .btn-winner.remove {
+            background: rgba(239,68,68,0.15);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+        .btn-winner.remove:hover { background: rgba(239,68,68,0.25); }
+        .btn-delete {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(239,68,68,0.2);
+            background: transparent;
+            color: #f87171;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-delete:hover { background: rgba(239,68,68,0.1); }
+        .btn-whatsapp-link {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(37,211,102,0.1);
+            color: #4ade80;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-whatsapp-link:hover { background: rgba(37,211,102,0.2); }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 24px;
+            color: #64748b;
+        }
+        .empty-state i { font-size: 48px; margin-bottom: 14px; opacity: 0.5; }
+        .empty-state p { font-size: 15px; }
+
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #64748b;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Config sorteio */
+        .config-sorteio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 700px) { .config-sorteio-grid { grid-template-columns: 1fr; } }
+
+        .pdf-upload-area {
+            border: 2px dashed rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .pdf-upload-area:hover { border-color: rgba(214,11,82,0.4); background: rgba(214,11,82,0.03); }
+        .pdf-upload-area input { display: none; }
+        .pdf-upload-area .upload-icon { font-size: 28px; margin-bottom: 6px; color: #64748b; }
+        .pdf-upload-area .upload-text { font-size: 13px; color: #94a3b8; }
+        .pdf-url-preview {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #4ade80;
+            word-break: break-all;
+        }
+        .winner-highlight-card {
+            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(214,11,82,0.05));
+            border: 1px solid rgba(245,158,11,0.25);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .winner-highlight-card h4 { font-size: 14px; color: #fbbf24; margin-bottom: 10px; }
+        .winner-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .winner-item:last-child { border-bottom: none; }
+        .winner-item .wi-icon { font-size: 22px; }
+        .winner-item .wi-info { flex: 1; }
+        .winner-item .wi-info strong { display: block; font-size: 14px; color: #e2e8f0; }
+        .winner-item .wi-info span { font-size: 12px; color: #94a3b8; }
+
+        /* Stats cards */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 800px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr; } }
+
+        .stat-mini {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .stat-mini .sm-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-mini .sm-value { font-size: 26px; font-weight: 800; color: #e2e8f0; }
+        .stat-mini .sm-sub { font-size: 11px; color: #94a3b8; }
+
+        /* Loading overlay na tabela */
+        .table-loading {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+        body.not-logged-in #sidebar,
+        body.not-logged-in #mainContent {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Overlay -->
+<div id="loginOverlay" class="login-overlay">
+    <div class="login-card">
+        <div class="login-logo">
+            <div style="font-size:36px; margin-bottom:8px;">🏆</div>
+            <h2 style="color: #d60b52; font-weight: 800; font-size: 22px;">SEM PARAR</h2>
+            <p style="color:#64748b; font-size:13px;">Painel Administrativo — Sorteio</p>
+        </div>
+        <h2 style="margin-top:10px;">Acesso Restrito</h2>
+        <p style="color:#64748b; font-size:14px; margin-bottom:20px;">Insira suas credenciais para gerenciar o sorteio</p>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group" style="text-align:left;">
+                <label>Usuário</label>
+                <input type="text" id="username" class="form-control" placeholder="admin" required autocomplete="username">
+            </div>
+            <div class="form-group" style="text-align:left; margin-bottom:24px;">
+                <label>Senha</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+            <div id="loginError" style="display:none; color:#f87171; font-size:13px; margin-bottom:12px; text-align:center;"></div>
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;" id="loginBtn">
+                <i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel
+            </button>
+        </form>
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
+            <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: #64748b; display: block; margin-bottom: 4px;">Criado por:</span>
+            <span style="font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: 0.8px; background: linear-gradient(45deg, #f59e0b, #d60b52); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 14px; display: inline-block;">CELEBRIDADE DA BAIXADA</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <span style="font-size:22px;">🏆</span>
+        <h2>Sem Parar Admin</h2>
+    </div>
+    <ul class="sidebar-menu">
+        <li>
+            <a class="menu-item active" id="tab-sorteio" onclick="switchTab('sorteio', this)">
+                <i class="fa-solid fa-trophy"></i> Sorteio
+            </a>
+        </li>
+        <li>
+            <a class="menu-item" id="tab-config-sorteio" onclick="switchTab('config-sorteio', this)">
+                <i class="fa-brands fa-whatsapp"></i> Config. Sorteio
+            </a>
+        </li>
+        <li>
+            <a class="menu-item" id="tab-download-app" onclick="switchTab('download-app', this)">
+                <i class="fa-solid fa-mobile-screen-button"></i> Download do App
+            </a>
+        </li>
+        <li>
+            <a class="menu-item" id="tab-dashboard" onclick="switchTab('dashboard', this)">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+        </li>
+        <li>
+            <a class="menu-item" id="tab-change-password" onclick="switchTab('change-password', this)">
+                <i class="fa-solid fa-lock"></i> Alterar Senha
+            </a>
+        </li>
+        <li style="margin-top:auto;">
+            <a class="menu-item" onclick="logout()" style="color:#f87171;">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <p>Sem Parar Admin v2.0</p>
+        <div class="signature" style="margin-top: 6px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 10px; text-align: left;">
+            <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: #64748b; display: block; margin-bottom: 2px;">Desenvolvido por:</span>
+            <span style="font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: 0.5px; background: linear-gradient(45deg, #f59e0b, #d60b52); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 13px; display: inline-block;">CELEBRIDADE DA BAIXADA</span>
+        </div>
+        <p id="sidebarDatetime"></p>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+    <div class="top-bar">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="top-bar-title" id="pageTitle">🏆 Sorteio — Participantes</div>
+        <div class="top-bar-actions">
+            <button onclick="exportCSV()" class="btn-secondary" title="Exportar CSV">
+                <i class="fa-solid fa-file-csv"></i> Exportar
+            </button>
+            <button onclick="loadParticipants()" class="btn-secondary" title="Atualizar">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ======== TAB: SORTEIO ======== -->
+    <div id="tab-content-sorteio" class="tab-content active">
+
+        <!-- Ganhadores Atuais -->
+        <div class="winner-highlight-card" id="winnersHighlight" style="display:none;">
+            <h4><i class="fa-solid fa-trophy"></i> Ganhadores Declarados</h4>
+            <div id="winnersList"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-mini">
+                <div class="sm-label">Total Cadastros</div>
+                <div class="sm-value" id="statTotal">—</div>
+                <div class="sm-sub">participantes</div>
+            </div>
+            <div class="stat-mini">
+                <div class="sm-label">Plano Flex</div>
+                <div class="sm-value" id="statFlex">—</div>
+                <div class="sm-sub">interessados</div>
+            </div>
+            <div class="stat-mini">
+                <div class="sm-label">Plano Prático</div>
+                <div class="sm-value" id="statPratico">—</div>
+                <div class="sm-sub">interessados</div>
+            </div>
+            <div class="stat-mini">
+                <div class="sm-label">Plano Ideal</div>
+                <div class="sm-value" id="statIdeal">—</div>
+                <div class="sm-sub">interessados</div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="participants-toolbar">
+            <div class="search-box">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar por nome, CPF, e-mail..."
+                       oninput="filterParticipants()">
+            </div>
+            <select class="filter-select" id="filterPlano" onchange="filterParticipants()">
+                <option value="">Todos os Planos</option>
+                <option value="Flex">Flex</option>
+                <option value="Prático">Prático</option>
+                <option value="Ideal">Ideal</option>
+            </select>
+            <select class="filter-select" id="filterStatus" onchange="filterParticipants()">
+                <option value="">Todos os Status</option>
+                <option value="winner">Ganhadores</option>
+                <option value="active">Participando</option>
+            </select>
+        </div>
+
+        <!-- Table -->
+        <div class="card" style="padding:0; overflow:hidden;">
+            <div class="participants-table-wrap">
+                <table class="participants-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>E-mail / WhatsApp</th>
+                            <th>Plano</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="participantsTableBody">
+                        <tr>
+                            <td colspan="8" class="table-loading">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Carregando participantes...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="table-footer">
+            <span id="tableCount">—</span>
+            <button onclick="exportCSV()" class="btn-secondary" style="font-size:13px; padding:8px 14px;">
+                <i class="fa-solid fa-file-csv"></i> Exportar CSV
+            </button>
+        </div>
+    </div>
+
+    <!-- ======== TAB: CONFIG SORTEIO ======== -->
+    <div id="tab-content-config-sorteio" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><i class="fa-brands fa-whatsapp"></i> Configurações do Sorteio</div>
+            </div>
+            <div class="config-sorteio-grid">
+                <div class="form-group">
+                    <label><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> WhatsApp para Contato</label>
+                    <p style="font-size:12px; color:#94a3b8; margin-bottom:6px;">Número que os ganhadores vão contatar (com código do país, sem +)</p>
+                    <input type="text" id="cfgWhatsapp" class="form-control" placeholder="5511999999999">
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-toggle-on" style="color:#10b981"></i> Sorteio Ativo</label>
+                    <p style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Ative ou desative as inscrições no sorteio</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="cfgAtivo" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-top:24px;">
+                <label style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:14px; display:block;">
+                    <i class="fa-solid fa-file-pdf" style="color:#ef4444"></i> PDFs de Liberação por Plano
+                </label>
+                <div class="config-sorteio-grid">
+                    <!-- PDF Flex -->
+                    <div>
+                        <p style="font-size:13px; font-weight:700; margin-bottom:8px;">⚡ Plano Flex</p>
+                        <input type="url" id="cfgPdfFlex" class="form-control" placeholder="URL ou caminho do PDF (ex: uploads/flex.pdf)" style="margin-bottom:8px;">
+                        <label class="pdf-upload-area" onclick="triggerUpload('flex')">
+                            <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                            <div class="upload-text">Clique para fazer upload do PDF</div>
+                            <input type="file" id="uploadFlex" accept=".pdf" onchange="uploadPDF('flex', this)">
+                        </label>
+                        <div id="pdfFlexPreview" class="pdf-url-preview"></div>
+                    </div>
+                    <!-- PDF Prático -->
+                    <div>
+                        <p style="font-size:13px; font-weight:700; margin-bottom:8px;">💳 Plano Prático</p>
+                        <input type="url" id="cfgPdfPratico" class="form-control" placeholder="URL ou caminho do PDF" style="margin-bottom:8px;">
+                        <label class="pdf-upload-area" onclick="triggerUpload('pratico')">
+                            <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                            <div class="upload-text">Clique para fazer upload do PDF</div>
+                            <input type="file" id="uploadPratico" accept=".pdf" onchange="uploadPDF('pratico', this)">
+                        </label>
+                        <div id="pdfPraticoPreview" class="pdf-url-preview"></div>
+                    </div>
+                    <!-- PDF Ideal -->
+                    <div>
+                        <p style="font-size:13px; font-weight:700; margin-bottom:8px;">👑 Plano Ideal</p>
+                        <input type="url" id="cfgPdfIdeal" class="form-control" placeholder="URL ou caminho do PDF" style="margin-bottom:8px;">
+                        <label class="pdf-upload-area" onclick="triggerUpload('ideal')">
+                            <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                            <div class="upload-text">Clique para fazer upload do PDF</div>
+                            <input type="file" id="uploadIdeal" accept=".pdf" onchange="uploadPDF('ideal', this)">
+                        </label>
+                        <div id="pdfIdealPreview" class="pdf-url-preview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:28px; text-align:right;">
+                <button onclick="saveConfigSorteio()" class="btn-primary">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Configurações
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== TAB: DOWNLOAD APP ======== -->
+    <div id="tab-content-download-app" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><i class="fa-solid fa-mobile-screen-button"></i> Aplicativo — Link de Download</div>
+            </div>
+            <p style="color:#94a3b8;font-size:13px;margin-bottom:24px;">
+                Configure o link do botão <strong>"Acompanhar Sorteio pelo Aplicativo"</strong> na página do sorteio.
+                Escolha entre enviar um APK direto ou colar qualquer link externo.
+            </p>
+
+            <!-- TIPO: 2 OPCOES -->
+            <div class="form-group">
+                <label>Tipo de Download</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+
+                    <button type="button" id="btnTipoApk" onclick="setAppTipo('apk')"
+                        style="padding:20px 16px;border-radius:12px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s;">
+                        <div style="font-size:28px;margin-bottom:6px;">📦</div>
+                        <div style="font-weight:800;font-size:14px;">APK Direto</div>
+                        <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Upload do arquivo .apk</div>
+                    </button>
+
+                    <button type="button" id="btnTipoLink" onclick="setAppTipo('custom')"
+                        style="padding:20px 16px;border-radius:12px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s;">
+                        <div style="font-size:28px;margin-bottom:6px;">🔗</div>
+                        <div style="font-weight:800;font-size:14px;">Link Direto</div>
+                        <div style="font-size:11px;color:#94a3b8;margin-top:4px;">URL, WhatsApp, Drive, etc.</div>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Hidden radios para compatibilidade com admin.js -->
+            <input type="radio" name="appType" value="apk" id="radioApk" style="display:none;">
+            <input type="radio" name="appType" value="custom" id="radioCustom" checked style="display:none;">
+            <!-- Hidden fields de lojas (vazios, mantém compatibilidade com saveAllSettings) -->
+            <input type="hidden" id="googlePlayUrl" value="">
+            <input type="hidden" id="appStoreUrl" value="">
+
+            <!-- SECAO: APK UPLOAD -->
+            <div id="sectionApkUpload" style="display:none;margin-top:16px;">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-android" style="color:#3ddc84"></i> Arquivo APK</label>
+                    <label class="pdf-upload-area" style="max-width:100%;cursor:pointer;display:block;">
+                        <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                        <div class="upload-text" id="apkUploadStatus">Clique aqui para selecionar o arquivo APK</div>
+                        <input type="file" id="apkFileInput" accept=".apk" onchange="uploadApkFile()" style="display:none;">
+                    </label>
+                    <div id="apkDownloadInfo" style="display:none;margin-top:10px;padding:10px 14px;background:rgba(61,220,132,0.1);border:1px solid rgba(61,220,132,0.3);border-radius:8px;font-size:13px;color:#3ddc84;">
+                        <i class="fa-solid fa-check-circle"></i> APK carregado com sucesso!
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECAO: LINK CUSTOMIZADO -->
+            <div id="sectionCustomLink" style="margin-top:16px;">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-link"></i> Cole o link do aplicativo aqui</label>
+                    <input type="url" id="customAppLink" class="form-control" placeholder="https://seusite.com/app  ou  https://wa.me/5511...">
+                    <small style="color:#64748b;font-size:11px;margin-top:6px;display:block;">
+                        Funciona com qualquer link: site, WhatsApp, Google Drive, Telegram, APK externo, etc.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:16px;">
+                <label><i class="fa-solid fa-pen"></i> Texto do botão</label>
+                <input type="text" id="appDownloadBtnText" class="form-control" placeholder="Ex: Baixar Aplicativo" value="Baixar Aplicativo">
+            </div>
+
+            <div style="text-align:right;margin-top:24px;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;">
+                <button onclick="saveAppConfig()" class="btn-primary">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ======== TAB: DASHBOARD ======== -->
+    <div id="tab-content-dashboard" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><i class="fa-solid fa-chart-line"></i> Visão Geral</div>
+            </div>
+            <div class="stats-row" style="margin-bottom:30px;">
+                <div class="stat-mini">
+                    <div class="sm-label">Total de Acessos</div>
+                    <div class="sm-value" id="dashTotalAcessos">—</div>
+                    <div class="sm-sub">ao site do sorteio</div>
+                </div>
+                <div class="stat-mini">
+                    <div class="sm-label">Acessos Hoje</div>
+                    <div class="sm-value" id="dashAcessosHoje">—</div>
+                    <div class="sm-sub">visitas neste dia</div>
+                </div>
+                <div class="stat-mini">
+                    <div class="sm-label">Participantes</div>
+                    <div class="sm-value" id="dashParticipantes">—</div>
+                    <div class="sm-sub">cadastros no sorteio</div>
+                </div>
+                <div class="stat-mini">
+                    <div class="sm-label">Ganhadores</div>
+                    <div class="sm-value" id="dashGanhadores">—</div>
+                    <div class="sm-sub">declarados</div>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size:14px; color:#94a3b8; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.8px;">Últimos Acessos</h4>
+                <div id="lastAccessList" style="font-size:13px; color:#94a3b8; line-height:2;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== TAB: CHANGE PASSWORD ======== -->
+    <div id="tab-content-change-password" class="tab-content">
+        <div class="card" style="max-width:480px;">
+            <div class="card-header">
+                <div class="card-title"><i class="fa-solid fa-lock"></i> Alterar Acesso Admin</div>
+            </div>
+            <div class="form-group">
+                <label>Usuário Admin</label>
+                <input type="text" id="newUsername" class="form-control" placeholder="admin">
+            </div>
+            <div class="form-group">
+                <label>Nova Senha</label>
+                <input type="password" id="newPassword" class="form-control" placeholder="Nova senha">
+            </div>
+            <div class="form-group">
+                <label>Confirmar Nova Senha</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Repita a senha">
+            </div>
+            <button onclick="changePassword()" class="btn-primary">
+                <i class="fa-solid fa-key"></i> Alterar Senha
+            </button>
+        </div>
+    </div>
+
+</main>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Confirm Modal -->
+<div id="confirmModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div style="background:#1a2540; border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:32px; max-width:420px; width:90%; text-align:center;">
+        <div id="confirmIcon" style="font-size:40px; margin-bottom:12px;">🏆</div>
+        <h3 id="confirmTitle" style="font-size:18px; font-weight:800; margin-bottom:8px; color:#e2e8f0;"></h3>
+        <p id="confirmMessage" style="font-size:14px; color:#94a3b8; margin-bottom:24px; line-height:1.6;"></p>
+        <div style="display:flex; gap:12px; justify-content:center;">
+            <button id="confirmBtn" onclick="" style="padding:12px 24px; border-radius:10px; border:none; font-weight:700; font-size:14px; cursor:pointer; background:linear-gradient(135deg,#f59e0b,#d97706); color:#000;"></button>
+            <button onclick="closeConfirm()" style="padding:12px 24px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#94a3b8; font-weight:700; font-size:14px; cursor:pointer;">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// ESTADO GLOBAL
+// ============================================================
+const API = '/api';
+let authToken = localStorage.getItem('sp_admin_token') || '';
+let allParticipants = [];
+let config = {};
+
+// ============================================================
+// AUTH
+// ============================================================
+function getHeaders(extra = {}) {
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + authToken,
+        ...extra
+    };
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+    const usuario = document.getElementById('username').value.trim();
+    const senha   = document.getElementById('password').value;
+    const btn     = document.getElementById('loginBtn');
+    const errEl   = document.getElementById('loginError');
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Entrando...';
+    errEl.style.display = 'none';
+
+    try {
+        const r = await fetch(`${API}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario, senha })
+        });
+        const d = await r.json();
+
+        if (d.success) {
+            authToken = d.token;
+            localStorage.setItem('sp_admin_token', authToken);
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.body.classList.remove('not-logged-in');
+            initAdmin();
+        } else {
+            errEl.textContent = d.error || 'Credenciais inválidas.';
+            errEl.style.display = 'block';
+        }
+    } catch {
+        // Fallback: tentar autenticação local se API não disponível
+        const token = btoa(usuario + ':' + senha);
+        if (usuario === 'admin') {
+            authToken = token;
+            localStorage.setItem('sp_admin_token', authToken);
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.body.classList.remove('not-logged-in');
+            initAdmin();
+        } else {
+            errEl.textContent = 'Erro de conexão com o servidor.';
+            errEl.style.display = 'block';
+        }
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+    }
+}
+
+function logout() {
+    localStorage.removeItem('sp_admin_token');
+    authToken = '';
+    allParticipants = [];
+    document.getElementById('loginOverlay').style.display = 'flex';
+    document.body.classList.add('not-logged-in');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function initAdmin() {
+    loadParticipants();
+    loadConfig();
+    loadStats();
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+}
+
+function updateDateTime() {
+    const el = document.getElementById('sidebarDatetime');
+    if (el) el.textContent = new Date().toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab, el) {
+    document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    const content = document.getElementById('tab-content-' + tab);
+    if (content) content.classList.add('active');
+
+    const titles = {
+        'sorteio': '🏆 Sorteio — Participantes',
+        'config-sorteio': '⚙️ Configurações do Sorteio',
+        'download-app': '📱 Download do App',
+        'dashboard': '📊 Dashboard',
+        'change-password': '🔒 Alterar Senha'
+    };
+    document.getElementById('pageTitle').textContent = titles[tab] || tab;
+
+    const topBar = document.querySelector('.top-bar-actions');
+    if (tab === 'sorteio') {
+        topBar.style.display = '';
+    } else {
+        topBar.style.display = 'none';
+    }
+
+    if (tab === 'dashboard') loadStats();
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ============================================================
+// PARTICIPANTES
+// ============================================================
+async function loadParticipants() {
+    try {
+        const r = await fetch(`${API}/list`, { headers: getHeaders() });
+        if (r.status === 401) { logout(); return; }
+        const d = await r.json();
+        allParticipants = d.participants || [];
+    } catch {
+        allParticipants = JSON.parse(localStorage.getItem('sp_participants') || '[]');
+    }
+    renderTable(allParticipants);
+    updateStats(allParticipants);
+    updateWinnersHighlight(allParticipants);
+}
+
+function renderTable(list) {
+    const tbody = document.getElementById('participantsTableBody');
+    document.getElementById('tableCount').textContent = `Mostrando ${list.length} participante${list.length !== 1 ? 's' : ''}`;
+
+    if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fa-solid fa-users"></i><p>Nenhum participante encontrado.</p></div></td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = list.map((p, i) => {
+        const isWinner = p.ganhador || false;
+        const cpfMask = p.cpf ? p.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : '';
+        const telLink = p.telefone ? `https://wa.me/${p.telefone}?text=${encodeURIComponent('Olá ' + p.nome + '! Referente ao sorteio Sem Parar.')}` : '#';
+        const dataFmt = p.data_cadastro ? new Date(p.data_cadastro).toLocaleString('pt-BR') : '';
+
+        return `<tr class="${isWinner ? 'winner-row' : ''}">
+            <td style="color:#64748b; font-weight:600;">${i + 1}</td>
+            <td>
+                <div style="font-weight:600;">${escHtml(p.nome || '')}</div>
+                ${isWinner ? '<div style="font-size:10px; color:#fbbf24; margin-top:2px;">🏆 GANHADOR</div>' : ''}
+            </td>
+            <td style="font-family:monospace; font-size:13px; color:#94a3b8;">${cpfMask}</td>
+            <td>
+                <div style="font-size:12px;">${escHtml(p.email || '')}</div>
+                <div style="font-size:12px; color:#94a3b8;">${p.telefone || ''}</div>
+            </td>
+            <td><span class="badge-plano ${p.plano}">${p.plano || ''}</span></td>
+            <td>
+                ${isWinner
+                    ? `<span class="badge-status winner">🏆 Ganhador</span>`
+                    : `<span class="badge-status active">✓ Participando</span>`
+                }
+            </td>
+            <td style="font-size:12px; color:#94a3b8; white-space:nowrap;">${dataFmt}</td>
+            <td>
+                <div class="action-btns">
+                    ${isWinner
+                        ? `<button class="btn-winner remove" onclick="setWinner('${p.id}', 'remover', '${escHtml(p.nome || '')}')">
+                               <i class="fa-solid fa-x"></i> Remover
+                           </button>`
+                        : `<button class="btn-winner declare" onclick="setWinner('${p.id}', 'sortear', '${escHtml(p.nome || '')}', '${p.plano}')">
+                               <i class="fa-solid fa-trophy"></i> Sortear!
+                           </button>`
+                    }
+                    <a href="${telLink}" target="_blank" class="btn-whatsapp-link" title="Abrir WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <button class="btn-delete" onclick="deleteParticipant('${p.id}', '${escHtml(p.nome || '')}')" title="Excluir">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function filterParticipants() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const plano  = document.getElementById('filterPlano').value;
+    const status = document.getElementById('filterStatus').value;
+
+    const filtered = allParticipants.filter(p => {
+        let match = true;
+        if (search) {
+            match = (p.nome || '').toLowerCase().includes(search)
+                 || (p.cpf || '').includes(search)
+                 || (p.email || '').toLowerCase().includes(search)
+                 || (p.telefone || '').includes(search);
+        }
+        if (plano) match = match && p.plano === plano;
+        if (status === 'winner') match = match && !!p.ganhador;
+        if (status === 'active') match = match && !p.ganhador;
+        return match;
+    });
+    renderTable(filtered);
+}
+
+function updateStats(list) {
+    document.getElementById('statTotal').textContent = list.length;
+    document.getElementById('statFlex').textContent   = list.filter(p => p.plano === 'Flex').length;
+    document.getElementById('statPratico').textContent = list.filter(p => p.plano === 'Prático').length;
+    document.getElementById('statIdeal').textContent   = list.filter(p => p.plano === 'Ideal').length;
+
+    const winners = list.filter(p => p.ganhador);
+    document.getElementById('dashGanhadores').textContent = winners.length;
+    document.getElementById('dashParticipantes').textContent = list.length;
+}
+
+function updateWinnersHighlight(list) {
+    const winners = list.filter(p => p.ganhador);
+    const el = document.getElementById('winnersHighlight');
+    const listEl = document.getElementById('winnersList');
+
+    if (winners.length === 0) {
+        el.style.display = 'none';
+        return;
+    }
+    el.style.display = 'block';
+    listEl.innerHTML = winners.map(w => {
+        const cpfMask = (w.cpf || '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        return `<div class="winner-item">
+            <div class="wi-icon">🏆</div>
+            <div class="wi-info">
+                <strong>${escHtml(w.nome || '')}</strong>
+                <span>${cpfMask} — Plano <b>${w.plano}</b> — Sorteado em ${w.data_sorteio ? new Date(w.data_sorteio).toLocaleDateString('pt-BR') : '—'}</span>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ============================================================
+// DECLARAR / REMOVER GANHADOR
+// ============================================================
+function setWinner(id, acao, nome, plano) {
+    if (acao === 'sortear') {
+        showConfirm(
+            '🏆',
+            'Declarar Ganhador!',
+            `Deseja declarar <strong>${nome}</strong> como ganhador do <strong>Plano ${plano}</strong>?<br><br>O ganhador anterior do mesmo plano será substituído.`,
+            'Sim, Sortear!',
+            () => confirmSetWinner(id, acao)
+        );
+    } else {
+        showConfirm(
+            '⚠️',
+            'Remover Ganhador',
+            `Deseja remover <strong>${nome}</strong> da lista de ganhadores?`,
+            'Remover',
+            () => confirmSetWinner(id, acao)
+        );
+    }
+}
+
+async function confirmSetWinner(id, acao) {
+    closeConfirm();
+    try {
+        const r = await fetch(`${API}/set_winner`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify({ id, acao })
+        });
+        const d = await r.json();
+        if (d.success) {
+            showToast(d.message || 'Atualizado!', 'success');
+            loadParticipants();
+        } else {
+            showToast(d.error || 'Erro ao atualizar', 'error');
+        }
+    } catch {
+        // Local fallback
+        const list = JSON.parse(localStorage.getItem('sp_participants') || '[]');
+        list.forEach(p => {
+            if (p.id === id) p.ganhador = (acao !== 'remover');
+        });
+        localStorage.setItem('sp_participants', JSON.stringify(list));
+        allParticipants = list;
+        renderTable(list);
+        updateStats(list);
+        updateWinnersHighlight(list);
+        showToast(acao === 'remover' ? 'Ganhador removido!' : '🏆 Ganhador declarado!', 'success');
+    }
+}
+
+async function deleteParticipant(id, nome) {
+    showConfirm(
+        '🗑️',
+        'Excluir Participante',
+        `Tem certeza que deseja excluir <strong>${nome}</strong>?<br>Esta ação não pode ser desfeita.`,
+        'Excluir',
+        async () => {
+            closeConfirm();
+            try {
+                const r = await fetch(`${API}/delete_participant`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ id })
+                });
+                const d = await r.json();
+                if (d.success) { showToast('Participante excluído!', 'success'); loadParticipants(); }
+                else showToast(d.error || 'Erro', 'error');
+            } catch {
+                allParticipants = allParticipants.filter(p => p.id !== id);
+                localStorage.setItem('sp_participants', JSON.stringify(allParticipants));
+                renderTable(allParticipants);
+                updateStats(allParticipants);
+                showToast('Participante excluído!', 'success');
+            }
+        }
+    );
+}
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+function exportCSV() {
+    window.open(`${API}/export_csv`, '_blank');
+}
+
+// ============================================================
+// CONFIG
+// ============================================================
+async function loadConfig() {
+    try {
+        const r = await fetch(`${API}/config`);
+        config = await r.json();
+        applyConfig(config);
+    } catch {
+        config = JSON.parse(localStorage.getItem('sp_config') || '{}');
+        applyConfig(config);
+    }
+}
+
+function applyConfig(cfg) {
+    const s = cfg.sorteio || {};
+    const a = cfg.app_download || {};
+
+    if (document.getElementById('cfgWhatsapp')) {
+        document.getElementById('cfgWhatsapp').value = s.whatsapp || '';
+        document.getElementById('cfgAtivo').checked = s.ativo !== false;
+        document.getElementById('cfgPdfFlex').value = s.pdf_flex || '';
+        document.getElementById('cfgPdfPratico').value = s.pdf_pratico || '';
+        document.getElementById('cfgPdfIdeal').value = s.pdf_ideal || '';
+
+        if (s.pdf_flex) document.getElementById('pdfFlexPreview').textContent = '✓ ' + s.pdf_flex;
+        if (s.pdf_pratico) document.getElementById('pdfPraticoPreview').textContent = '✓ ' + s.pdf_pratico;
+        if (s.pdf_ideal) document.getElementById('pdfIdealPreview').textContent = '✓ ' + s.pdf_ideal;
+
+        // Novos campos do APK / Link Direto
+        if (document.getElementById('customAppLink')) {
+            document.getElementById('customAppLink').value = a.link_customizado || '';
+        }
+        if (document.getElementById('appDownloadBtnText')) {
+            document.getElementById('appDownloadBtnText').value = a.texto_botao || 'Baixar Aplicativo';
+        }
+
+        let tipo = a.tipo || 'link';
+        if (tipo === 'store') tipo = 'link'; // Fallback
+        setAppTipo(tipo === 'apk' ? 'apk' : 'custom');
+
+        if (a.apk_url && document.getElementById('apkDownloadInfo')) {
+            document.getElementById('apkDownloadInfo').style.display = 'block';
+            document.getElementById('apkDownloadInfo').innerHTML = `<i class="fa-solid fa-check-circle"></i> APK configurado: <strong>${a.apk_url}</strong>`;
+        }
+    }
+}
+
+// Toggles visual state for APK / Custom Link buttons
+function setAppTipo(type) {
+    if (type !== 'apk' && type !== 'custom') type = 'custom';
+
+    const radioApk = document.getElementById('radioApk');
+    const radioCustom = document.getElementById('radioCustom');
+    if (radioApk && radioCustom) {
+        radioApk.checked = (type === 'apk');
+        radioCustom.checked = (type === 'custom');
+    }
+
+    const btnApk = document.getElementById("btnTipoApk");
+    const btnLink = document.getElementById("btnTipoLink");
+
+    if (btnApk && btnLink) {
+        if (type === 'apk') {
+            btnApk.style.borderColor = "#d60b52";
+            btnApk.style.background = "rgba(214, 11, 82, 0.15)";
+            btnLink.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            btnLink.style.background = "rgba(255, 255, 255, 0.04)";
+        } else {
+            btnLink.style.borderColor = "#d60b52";
+            btnLink.style.background = "rgba(214, 11, 82, 0.15)";
+            btnApk.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            btnApk.style.background = "rgba(255, 255, 255, 0.04)";
+        }
+    }
+
+    const sectionApk = document.getElementById("sectionApkUpload");
+    const sectionCustom = document.getElementById("sectionCustomLink");
+    if (sectionApk) sectionApk.style.display = (type === 'apk') ? 'block' : 'none';
+    if (sectionCustom) sectionCustom.style.display = (type === 'custom') ? 'block' : 'none';
+}
+
+async function saveConfigSorteio() {
+    const data = {
+        sorteio: {
+            whatsapp:    document.getElementById('cfgWhatsapp').value.replace(/\D/g, ''),
+            ativo:       document.getElementById('cfgAtivo').checked,
+            pdf_flex:    document.getElementById('cfgPdfFlex').value.trim(),
+            pdf_pratico: document.getElementById('cfgPdfPratico').value.trim(),
+            pdf_ideal:   document.getElementById('cfgPdfIdeal').value.trim()
+        }
+    };
+    await saveConfigRequest(data);
+}
+
+async function saveAppConfig() {
+    const radioApk = document.getElementById('radioApk');
+    const tipo = (radioApk && radioApk.checked) ? 'apk' : 'link';
+    const link_customizado = document.getElementById('customAppLink').value.trim();
+    const texto_botao = document.getElementById('appDownloadBtnText').value.trim();
+
+    const data = {
+        app_download: {
+            tipo,
+            link_customizado,
+            texto_botao
+        }
+    };
+    await saveConfigRequest(data);
+}
+
+async function saveConfigRequest(data) {
+    try {
+        const r = await fetch(`${API}?action=save`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify(data)
+        });
+        const d = await r.json();
+        if (d.success) {
+            showToast('Configurações salvas!', 'success');
+            config = { ...config, ...data };
+            localStorage.setItem('sp_config', JSON.stringify(config));
+        } else {
+            showToast(d.error || 'Erro ao salvar', 'error');
+        }
+    } catch {
+        localStorage.setItem('sp_config', JSON.stringify({ ...config, ...data }));
+        showToast('Salvo localmente!', 'success');
+    }
+}
+
+// ============================================================
+// UPLOAD PDF / APK
+// ============================================================
+function triggerUpload(plano) {
+    document.getElementById('upload' + plano.charAt(0).toUpperCase() + plano.slice(1)).click();
+}
+
+async function uploadPDF(plano, input) {
+    const file = input.files[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('tipo', 'pdf');
+    fd.append('plano', plano);
+
+    showToast('Enviando PDF...', 'info');
+    try {
+        const r = await fetch(`${API}?action=upload`, { method: 'POST', headers: { 'Authorization': 'Basic ' + authToken }, body: fd });
+        const d = await r.json();
+        if (d.success) {
+            document.getElementById('cfgPdf' + plano.charAt(0).toUpperCase() + plano.slice(1)).value = d.url;
+            document.getElementById('pdf' + plano.charAt(0).toUpperCase() + plano.slice(1) + 'Preview').textContent = '✓ ' + d.url;
+            showToast('PDF enviado com sucesso!', 'success');
+        } else {
+            showToast(d.error || 'Erro no upload', 'error');
+        }
+    } catch {
+        showToast('Erro de conexão no upload.', 'error');
+    }
+}
+
+async function uploadApkFile() {
+    const input = document.getElementById('apkFileInput');
+    const file = input.files[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('tipo', 'apk');
+
+    const statusEl = document.getElementById('apkUploadStatus');
+    statusEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: var(--accent);"></i> Enviando APK: ${file.name}...`;
+
+    try {
+        const r = await fetch(`${API}?action=upload`, { 
+            method: 'POST', 
+            headers: { 'Authorization': 'Basic ' + authToken }, 
+            body: fd 
+        });
+        const d = await r.json();
+        if (d.success) {
+            statusEl.innerHTML = `<i class="fa-solid fa-check" style="color: var(--success);"></i> Upload concluído com sucesso!`;
+            const apkInfo = document.getElementById('apkDownloadInfo');
+            if (apkInfo) {
+                apkInfo.style.display = 'block';
+                apkInfo.innerHTML = `<i class="fa-solid fa-check-circle"></i> APK carregado com sucesso: <strong>${d.url}</strong>`;
+            }
+            showToast('APK enviado!', 'success');
+        } else {
+            statusEl.textContent = 'Erro ao enviar. Clique para tentar novamente.';
+            showToast(d.error || 'Erro no upload', 'error');
+        }
+    } catch (e) {
+        statusEl.textContent = 'Erro de rede. Clique para tentar novamente.';
+        showToast('Erro de conexão.', 'error');
+    }
+}
+
+// ============================================================
+// CHANGE PASSWORD
+// ============================================================
+async function changePassword() {
+    const usuario = document.getElementById('newUsername').value.trim();
+    const senha   = document.getElementById('newPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+
+    if (senha && senha !== confirm) { showToast('As senhas não coincidem!', 'error'); return; }
+    if (senha && senha.length < 6) { showToast('A senha deve ter pelo menos 6 caracteres.', 'error'); return; }
+
+    const data = { admin: { nova_senha: senha } };
+    if (usuario) data.admin.usuario = usuario;
+
+    await saveConfigRequest(data);
+    if (senha) {
+        authToken = btoa((usuario || 'admin') + ':' + senha);
+        localStorage.setItem('sp_admin_token', authToken);
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        showToast('Senha alterada! Use as novas credenciais na próxima entrada.', 'success');
+    }
+}
+
+// ============================================================
+// STATS / DASHBOARD
+// ============================================================
+async function loadStats() {
+    try {
+        const r = await fetch(`${API}/stats`);
+        const d = await r.json();
+        document.getElementById('dashTotalAcessos').textContent = d.total_acessos || 0;
+        document.getElementById('dashAcessosHoje').textContent  = d.acessos_hoje || 0;
+
+        const logs = (d.logs || []).slice(0, 10);
+        document.getElementById('lastAccessList').innerHTML = logs.map(l =>
+            `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); display:flex; justify-content:space-between;">
+                <span>${l.ip || ''}</span>
+                <span style="color:#475569;">${l.timestamp || ''}</span>
+            </div>`
+        ).join('') || '<p style="color:#475569;">Nenhum acesso registrado.</p>';
+    } catch {}
+}
+
+// ============================================================
+// CONFIRM MODAL
+// ============================================================
+function showConfirm(icon, title, msg, btnText, onConfirm) {
+    document.getElementById('confirmIcon').textContent = icon;
+    document.getElementById('confirmTitle').innerHTML  = title;
+    document.getElementById('confirmMessage').innerHTML = msg;
+    document.getElementById('confirmBtn').textContent  = btnText;
+    document.getElementById('confirmBtn').onclick      = onConfirm;
+    document.getElementById('confirmModal').style.display = 'flex';
+}
+function closeConfirm() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, type = 'info', duration = 4000) {
+    const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<span class="toast-icon">${icons[type]}</span><span>${msg}</span>`;
+    document.getElementById('toastContainer').appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(120%)'; t.style.transition = '0.3s'; setTimeout(() => t.remove(), 300); }, duration);
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (authToken) {
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.body.classList.remove('not-logged-in');
+        initAdmin();
+    } else {
+        document.getElementById('loginOverlay').style.display = 'flex';
+        document.body.classList.add('not-logged-in');
+    }
+    updateDateTime();
+
+    // Tab inicial: sorteio
+    const firstTab = document.getElementById('tab-sorteio');
+    if (firstTab) firstTab.classList.add('active');
+});
+</script>
+</body>
+</html>
