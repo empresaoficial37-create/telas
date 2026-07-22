@@ -1,7 +1,6 @@
-// POST /api/login — Login admin
-import { cors } from './_supabase.js';
+const { cors } = require('./_supabase');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
@@ -23,4 +22,4 @@ export default async function handler(req, res) {
   }
 
   return res.status(401).json({ error: 'Usuário ou senha incorretos' });
-}
+};

@@ -1,5 +1,4 @@
-// POST /api/register — Cadastrar participante
-import { supabase, cors } from './_supabase.js';
+const { supabase, cors } = require('./_supabase');
 
 function validarCPF(cpf) {
   cpf = cpf.replace(/\D/g, '');
@@ -13,7 +12,7 @@ function validarCPF(cpf) {
   return true;
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
@@ -31,42 +30,26 @@ export default async function handler(req, res) {
   const planosValidos = ['Flex', 'Prático', 'Pratico', 'Ideal'];
   const plano = planosValidos.includes(planoRaw) ? planoRaw : 'Flex';
 
-  if (!nome || nome.length < 2)          return res.status(400).json({ error: 'Nome inválido' });
-  if (!validarCPF(cpf))                   return res.status(400).json({ error: 'CPF inválido' });
-  if (!email.includes('@'))               return res.status(400).json({ error: 'E-mail inválido' });
-  if (telefone.length < 10)              return res.status(400).json({ error: 'Telefone inválido' });
+  if (!nome || nome.length < 2)   return res.status(400).json({ error: 'Nome inválido' });
+  if (!validarCPF(cpf))           return res.status(400).json({ error: 'CPF inválido' });
+  if (!email.includes('@'))       return res.status(400).json({ error: 'E-mail inválido' });
+  if (telefone.length < 10)       return res.status(400).json({ error: 'Telefone inválido' });
 
-  // Verificar duplicata
-  const { data: existente } = await supabase
-    .from('participants')
-    .select('id')
-    .eq('cpf', cpf)
-    .single();
+  const { data: existente } = await supabase.from('participants').select('id').eq('cpf', cpf).single();
+  if (existente) return res.status(409).json({ error: 'CPF já cadastrado', duplicate: true });
 
-  if (existente) {
-    return res.status(409).json({ error: 'CPF já cadastrado', duplicate: true });
-  }
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.socket?.remoteAddress || '';
 
-  const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress || '';
-
-  const novoParticipante = {
-    id:            'sp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
-    nome,
-    cpf,
-    email,
-    telefone,
-    plano,
-    ganhador:      false,
+  const novo = {
+    id: 'sp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    nome, cpf, email, telefone, plano,
+    ganhador: false,
     data_cadastro: new Date().toISOString(),
     ip
   };
 
-  const { error } = await supabase.from('participants').insert(novoParticipante);
+  const { error } = await supabase.from('participants').insert(novo);
+  if (error) return res.status(500).json({ error: 'Erro ao salvar cadastro.' });
 
-  if (error) {
-    console.error('[register] Erro Supabase:', error);
-    return res.status(500).json({ error: 'Erro ao salvar cadastro. Tente novamente.' });
-  }
-
-  return res.status(200).json({ success: true, id: novoParticipante.id, message: 'Cadastro realizado com sucesso!' });
-}
+  return res.status(200).json({ success: true, id: novo.id, message: 'Cadastro realizado com sucesso!' });
+};

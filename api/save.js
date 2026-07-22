@@ -1,11 +1,10 @@
-// POST /api/save — Salvar configurações (admin)
-import { getConfig, saveConfig, checkAuth, cors } from './_supabase.js';
+const { getConfig, saveConfig, checkAuth, cors } = require('./_supabase');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (!checkAuth(req))          return res.status(401).json({ error: 'Acesso negado' });
-  if (req.method !== 'POST')    return res.status(405).json({ error: 'Method Not Allowed' });
+  if (!checkAuth(req))       return res.status(401).json({ error: 'Acesso negado' });
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
   let body = req.body;
   if (typeof body === 'string') {
@@ -13,15 +12,9 @@ export default async function handler(req, res) {
   }
 
   const currentConfig = await getConfig();
-
-  if (body?.sorteio) {
-    currentConfig.sorteio = { ...currentConfig.sorteio, ...body.sorteio };
-  }
-  if (body?.app_download) {
-    currentConfig.app_download = { ...currentConfig.app_download, ...body.app_download };
-  }
-  // Nota: mudança de senha é feita via variável de ambiente ADMIN_PASSWORD na Vercel
+  if (body?.sorteio)      currentConfig.sorteio      = { ...currentConfig.sorteio,      ...body.sorteio };
+  if (body?.app_download) currentConfig.app_download = { ...currentConfig.app_download, ...body.app_download };
 
   await saveConfig(currentConfig);
   return res.status(200).json({ success: true });
-}
+};

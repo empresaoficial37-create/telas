@@ -1,11 +1,10 @@
-// POST /api/delete_participant — Excluir participante (admin)
-import { supabase, checkAuth, cors } from './_supabase.js';
+const { supabase, checkAuth, cors } = require('./_supabase');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (!checkAuth(req))          return res.status(401).json({ error: 'Acesso negado' });
-  if (req.method !== 'POST')    return res.status(405).json({ error: 'Method Not Allowed' });
+  if (!checkAuth(req))       return res.status(401).json({ error: 'Acesso negado' });
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
   let body = req.body;
   if (typeof body === 'string') {
@@ -19,4 +18,4 @@ export default async function handler(req, res) {
   if (error) return res.status(500).json({ error: 'Erro ao excluir' });
 
   return res.status(200).json({ success: true });
-}
+};
