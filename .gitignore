@@ -1,11 +1,10 @@
 # Arquivos que NÃO precisam ir para o servidor
 api.php
 db_config.php
-banco.sql
-*.jfif
-*.sql
 node_modules/
 .env
 .env.local
 data/
 uploads/
+supabase_setup.sql
+.env.vercel
